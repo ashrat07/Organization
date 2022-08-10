@@ -22,7 +22,8 @@ struct OrganzationView: View {
     init(syncEmployees: (() -> Void)? = nil) {
         let request: NSFetchRequest<Employee> = Employee.fetchRequest()
         request.sortDescriptors = [NSSortDescriptor(keyPath: \Employee.level, ascending: false)]
-        request.fetchLimit = 100
+//        request.fetchLimit = 100
+//        request.fetchBatchSize = 100
         _employees = FetchRequest(fetchRequest: request)
         self.syncEmployees = syncEmployees
     }

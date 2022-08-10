@@ -31,9 +31,9 @@ struct PersistenceController {
         }
         return result
     }()
-
+    
     let container: NSPersistentContainer
-
+    
     init(inMemory: Bool = false) {
         container = NSPersistentContainer(name: "Organization")
         if inMemory {
@@ -43,7 +43,7 @@ struct PersistenceController {
             if let error = error as NSError? {
                 // Replace this implementation with code to handle the error appropriately.
                 // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-
+                
                 /*
                  Typical reasons for an error here include:
                  * The parent directory does not exist, cannot be created, or disallows writing.
@@ -66,6 +66,7 @@ struct PersistenceController {
         }
         
         var employeeIterator = employees.makeIterator()
+//        var employeeIdMap: [Int: Employee] = [:]
         let insertRequest = NSBatchInsertRequest(entity: Employee.entity(), managedObjectHandler: { obj in
             // Stop add item when iterator return nil
             guard let employee = employeeIterator.next() else { return true }
@@ -80,7 +81,12 @@ struct PersistenceController {
                 employeeMO.designation = employee.designation
                 if let managerId = employee.managerId {
                     employeeMO.managerId = Int32(managerId)
+//                    // Set up relationships
+//                    if let manager = employeeIdMap[managerId] {
+//                        employeeMO.manager = manager
+//                    }
                 }
+//                employeeIdMap[employee.id] = employeeMO
             }
             
             // Continue adding employee to batch insert request

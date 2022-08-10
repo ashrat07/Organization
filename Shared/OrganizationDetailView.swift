@@ -86,7 +86,8 @@ struct OrganizationManagerView: View {
             Divider()
                 .frame(width: 1, height: 10, alignment: .center)
                 .overlay(.gray)
-            OrganizationReporteeView(reportee: reportee)
+            let sortedReportees = reportee.sorted(by: { $0.firstName ?? "" < $1.firstName ?? "" || $0.lastName ?? "" < $1.lastName ?? "" })
+            OrganizationReporteeView(reportee: sortedReportees)
         }
     }
 }
